@@ -1,0 +1,70 @@
+classDiagram
+
+class Donor {
+    name: str
+    phoneNumber: str
+    registerMedicine()
+}
+
+class PublicPatient {
+}
+
+class Hospital {
+    department: str
+}
+
+class Medicine {
+    name: str
+    type: str
+    barcode: str
+    expiryDate: str
+    condition: bool
+    eligibility: bool
+    amount: int
+    status: str
+}
+
+class Pharmacy {
+    name: str
+    phoneNumber: str
+    location: str
+    scanBarcode()
+    checkExpiryDate()
+    checkCondition()
+    determineDonationEligibility()
+    sendToCharity()
+    sendToDisposal()
+}
+
+class CharityOrganization {
+    name: str
+    phoneNumber: str
+    receiveMedicine()
+}
+
+class WasteDisposalFacility {
+    name: str
+    phoneNumber: str
+    disposeMedicine()
+}
+
+class Administrator {
+    name: str
+    phoneNumber: str
+    trackStatus()
+    generateConfirmation()
+    generateReports()
+}
+
+Donor <|-- PublicPatient
+Donor <|-- Hospital
+
+Donor "1" --> "0..*" Medicine : registers
+
+Pharmacy "1" --> "0..*" Medicine : checks and updates status
+
+Pharmacy "0..*" --> "0..*" CharityOrganization : sends medicine to
+
+Pharmacy "0..*" --> "0..*" WasteDisposalFacility : sends medicine to
+
+Administrator "0..*" --> "0..*" Medicine : tracks
